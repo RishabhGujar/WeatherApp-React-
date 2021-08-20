@@ -1,8 +1,66 @@
-import React from 'react';
+import React, {  useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import{WindMillLoading} from "./loading";
+import { HeadWeather } from './App';
+
+
+const APIkey= "4d7394a873045264897425f7227fcf79";
+
+
+
+
+
+function MainWeather(){
+   const [data,setdata] = useState([]);
+   const [lat,setLat]= useState([]);
+   const [lon,setLong] = useState([])
+   const [scale,setScale] = useState(false);
+   const metric = scale ? "imperial" : "metric";
+  
+   useEffect(()=>{
+     
+      let getLocation = async()=>{
+      navigator.geolocation.getCurrentPosition(function(position){
+      setLat(position.coords.latitude);
+      setLong(position.coords.longitude);
+      });
+
+      await  fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&&appid=${APIkey}&units=${metric}`).then(res=>{
+      return res.json()
+       }).then(result=>{
+      setdata(result);
+     
+      
+      })
+      }
+
+      getLocation();
+      
+      },[lat,lon,scale,metric])
+
+   function handleClick(){
+      setScale(!scale);
+    }
+
+    const view = (
+      <> 
+         <HeadWeather data={data} handleClick={handleClick} scale={scale} />  
+      </>
+    )
+   
+   return (data.current===undefined  ? <WindMillLoading/> : view) ;
+}
+
+
+
+
+
+function App(){
+  return <div>
+    <MainWeather/>
+  </div>
+}
 
 ReactDOM.render(
   <React.StrictMode>
@@ -11,7 +69,6 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+
+
+

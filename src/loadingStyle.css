@@ -1,0 +1,38 @@
+.center{
+    display:flex;
+    min-height:100vh;
+    background-color: black;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+.move{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+
+}
+.c1{
+    color: rgb(241, 237, 241);
+    width: 10vh;
+    height: 10vh;
+}
+.c2{
+    color: rgb(241, 238, 11);
+    width: 10vh;
+    height: 10vh;
+}
+.c3{
+    color: rgb(241, 65, 11);
+    width: 10vh;
+    height: 10vh;
+}
+.c4{
+    color: rgb(30, 241, 11);
+    width: 10vh;
+    height: 10vh;
+}
+.c5{
+    color: rgb(16, 108, 214);
+    width: 10vh;
+    height: 10vh;
+}
